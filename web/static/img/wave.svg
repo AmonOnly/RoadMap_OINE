@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" fill="none">
+  <rect width="640" height="360" rx="24" fill="#0f172a"/>
+  <path d="M40 200C80 160 120 160 160 200C200 240 240 240 280 200C320 160 360 160 400 200C440 240 480 240 520 200C560 160 600 160 600 200" stroke="#60a5fa" stroke-width="6" fill="none"/>
+  <line x1="60" y1="260" x2="220" y2="260" stroke="#f97316" stroke-width="4"/>
+  <text x="100" y="285" fill="#e2e8f0" font-size="16" font-family="Arial">Comprimento de onda</text>
+</svg>

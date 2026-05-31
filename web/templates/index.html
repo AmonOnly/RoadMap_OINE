@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OINE Physics Daily - ENEM</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="app">
+      <nav class="nav">
+        <div class="brand">OINE Physics Daily</div>
+        <div class="nav-links">
+          <a href="/content">Conteudo do dia</a>
+          <a href="/quiz">Quiz</a>
+        </div>
+      </nav>
+      <header class="hero">
+        <div class="hero-content">
+          <p class="pill">Trilha diária ENEM • Física</p>
+          <h1>OINE Physics Daily</h1>
+          <p class="subtitle">
+            Uma jornada inteligente para dominar Física no ENEM com foco, ritmo e
+            prática diária.
+          </p>
+          <div class="hero-actions">
+            <a class="primary" href="/content">Entrar no conteudo</a>
+            <a class="ghost" href="/quiz">Ir para o quiz</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>Configuração do aluno</h3>
+          <label>
+            Nome
+            <input id="student-name" type="text" placeholder="Digite seu nome" />
+          </label>
+          <label>
+            Horas por dia
+            <input id="hours" type="number" min="0.5" step="0.5" value="2" />
+          </label>
+          <label>
+            Dias planejados
+            <input id="days" type="number" min="3" max="14" value="7" />
+          </label>
+          <label>
+            Objetivo
+            <input id="goal" type="text" value="ENEM" />
+          </label>
+          <label>
+            Idioma das perguntas
+            <select id="language">
+              <option value="pt">Português</option>
+              <option value="en">Inglês</option>
+            </select>
+          </label>
+          <button id="refresh">Atualizar trilha</button>
+        </div>
+      </header>
+
+      <section class="dashboard">
+        <div class="stat-card">
+          <p class="stat-label">XP total</p>
+          <h2 id="xp-total">0</h2>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Streak</p>
+          <h2 id="streak">0 dias</h2>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Progresso</p>
+          <h2 id="summary">0/0 dias</h2>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Fonte do quiz</p>
+          <h2 id="quiz-source">-</h2>
+        </div>
+      </section>
+
+      <section class="panel landing-panel">
+        <h2>Escolha sua jornada</h2>
+        <p class="subtitle">
+          Use o assistente para configurar sua rotina e depois siga para a pagina
+          de conteudo diario ou para o quiz adaptativo.
+        </p>
+        <div class="landing-actions">
+          <a class="primary" href="/content">Conteudo do dia</a>
+          <a class="ghost" href="/quiz">Quiz adaptativo</a>
+        </div>
+      </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

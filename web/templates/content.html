@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Conteudo do dia - OINE Physics Daily</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body data-page="content">
+    <div class="app">
+      <nav class="nav">
+        <div class="brand">OINE Physics Daily</div>
+        <div class="nav-links">
+          <a href="/">Inicio</a>
+          <a class="active" href="/content">Conteudo</a>
+          <a href="/quiz">Quiz</a>
+        </div>
+      </nav>
+
+      <header class="hero compact">
+        <div class="hero-content">
+          <p class="pill">Conteudo do dia</p>
+          <h1>Roteiro completo de estudos</h1>
+          <p class="subtitle">
+            Aqui voce encontra toda a explicacao do tema, demonstracoes e recursos
+            visuais para fixar o conteudo.
+          </p>
+        </div>
+        <div class="hero-card">
+          <h3>Configuracao rapida</h3>
+          <label>
+            Nome
+            <input id="student-name" type="text" placeholder="Digite seu nome" />
+          </label>
+          <label>
+            Horas por dia
+            <input id="hours" type="number" min="0.5" step="0.5" value="2" />
+          </label>
+          <label>
+            Dias planejados
+            <input id="days" type="number" min="3" max="14" value="7" />
+          </label>
+          <label>
+            Objetivo
+            <input id="goal" type="text" value="ENEM" />
+          </label>
+          <button id="refresh">Atualizar trilha</button>
+        </div>
+      </header>
+
+      <section class="dashboard">
+        <div class="stat-card">
+          <p class="stat-label">XP total</p>
+          <h2 id="xp-total">0</h2>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Streak</p>
+          <h2 id="streak">0 dias</h2>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Progresso</p>
+          <h2 id="summary">0/0 dias</h2>
+        </div>
+      </section>
+
+      <main class="grid">
+        <section class="panel chat-panel">
+          <div class="panel-header">
+            <h2>Assistente de estudo</h2>
+            <span class="summary">Planejamento guiado</span>
+          </div>
+          <div id="chat" class="chat"></div>
+          <div class="chat-actions">
+            <input id="chat-input" type="text" placeholder="Digite sua resposta..." />
+            <button id="chat-send">Enviar</button>
+          </div>
+        </section>
+
+        <section class="panel day-panel">
+          <div class="panel-header">
+            <h2>Mapa de dias</h2>
+            <span id="day-label" class="summary">Selecione um dia</span>
+          </div>
+          <div id="days-grid" class="days-grid"></div>
+          <div class="actions">
+            <button id="complete-day">Marcar dia concluido</button>
+          </div>
+        </section>
+
+        <section class="panel content-panel">
+          <div class="panel-header">
+            <h2>Conteudo detalhado</h2>
+            <span id="day-difficulty" class="summary">-</span>
+          </div>
+          <div id="content-overview" class="content-block"></div>
+          <div class="content-columns">
+            <div>
+              <h3>Conceitos-chave</h3>
+              <ul id="content-concepts" class="content-list"></ul>
+            </div>
+            <div>
+              <h3>Formulas e relacoes</h3>
+              <ul id="content-formulas" class="content-list"></ul>
+            </div>
+          </div>
+          <div class="content-columns">
+            <div>
+              <h3>Exemplo guiado</h3>
+              <p id="content-example"></p>
+            </div>
+            <div>
+              <h3>Demonstracao</h3>
+              <p id="content-demo"></p>
+            </div>
+          </div>
+          <div id="content-gallery" class="content-gallery"></div>
+          <div class="resource-list" id="resource-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>

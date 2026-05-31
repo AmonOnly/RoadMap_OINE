@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" fill="none">
+  <rect width="640" height="360" rx="24" fill="#0f172a"/>
+  <path d="M80 260L200 200L320 160L440 120L560 80" stroke="#60a5fa" stroke-width="6" fill="none"/>
+  <circle cx="80" cy="260" r="10" fill="#f97316"/>
+  <circle cx="200" cy="200" r="10" fill="#f97316"/>
+  <circle cx="320" cy="160" r="10" fill="#f97316"/>
+  <circle cx="440" cy="120" r="10" fill="#f97316"/>
+  <circle cx="560" cy="80" r="10" fill="#f97316"/>
+  <text x="80" y="310" fill="#e2e8f0" font-size="18" font-family="Arial">Tempo</text>
+  <text x="20" y="40" fill="#e2e8f0" font-size="18" font-family="Arial" transform="rotate(-90 20 40)">Velocidade</text>
+</svg>

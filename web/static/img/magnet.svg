@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" fill="none">
+  <rect width="640" height="360" rx="24" fill="#0f172a"/>
+  <path d="M240 80H320V200C320 244.2 284.2 280 240 280C195.8 280 160 244.2 160 200V80H240Z" stroke="#60a5fa" stroke-width="4" fill="none"/>
+  <path d="M320 80H400V200C400 244.2 364.2 280 320 280V200" stroke="#f97316" stroke-width="4" fill="none"/>
+  <line x1="420" y1="120" x2="520" y2="80" stroke="#e2e8f0" stroke-width="3"/>
+  <line x1="420" y1="160" x2="520" y2="120" stroke="#e2e8f0" stroke-width="3"/>
+  <line x1="420" y1="200" x2="520" y2="160" stroke="#e2e8f0" stroke-width="3"/>
+  <text x="185" y="110" fill="#e2e8f0" font-size="16" font-family="Arial">N</text>
+  <text x="365" y="110" fill="#e2e8f0" font-size="16" font-family="Arial">S</text>
+</svg>
