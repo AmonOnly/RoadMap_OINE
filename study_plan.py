@@ -6,48 +6,106 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Iterable
 
-BASE_TOPICS = [
+CURRICULO_DIARIO = [
     {
-        "titulo": "Cinemática",
-        "explicacao": "Conceitos de velocidade, aceleração e gráficos no ENEM.",
+        "titulo": "Cinemática: leitura de gráficos",
+        "base": "Cinemática",
+        "explicacao": "Interpretar gráficos de posição, velocidade e tempo em questões do ENEM.",
         "peso": 1.0,
     },
     {
-        "titulo": "Dinâmica",
-        "explicacao": "Leis de Newton e forças em situações do cotidiano.",
+        "titulo": "Cinemática: MRU e MRUV",
+        "base": "Cinemática",
+        "explicacao": "Aplicar MRU e MRUV para resolver movimentos com aceleração constante.",
+        "peso": 1.05,
+    },
+    {
+        "titulo": "Dinâmica: leis de Newton",
+        "base": "Dinâmica",
+        "explicacao": "Relacionar força, massa e aceleração em situações cotidianas.",
         "peso": 1.1,
     },
     {
-        "titulo": "Energia",
-        "explicacao": "Trabalho, potência e conservação de energia em problemas.",
+        "titulo": "Dinâmica: atrito e plano inclinado",
+        "base": "Dinâmica",
+        "explicacao": "Analisar atrito, decomposição de forças e equilíbrio em rampas.",
+        "peso": 1.15,
+    },
+    {
+        "titulo": "Energia: trabalho e potência",
+        "base": "Energia",
+        "explicacao": "Calcular trabalho, potência e rendimento em situações práticas.",
         "peso": 1.0,
     },
     {
-        "titulo": "Termologia",
-        "explicacao": "Calor, temperatura e trocas térmicas em sistemas simples.",
-        "peso": 0.9,
+        "titulo": "Energia: conservação e rendimento",
+        "base": "Energia",
+        "explicacao": "Usar conservação da energia e perdas para resolver problemas do ENEM.",
+        "peso": 1.05,
     },
     {
-        "titulo": "Ondulatória",
-        "explicacao": "Ondas, frequência e aplicações em som e luz.",
-        "peso": 0.9,
-    },
-    {
-        "titulo": "Óptica",
-        "explicacao": "Reflexão, refração e espelhos/lentes no ENEM.",
+        "titulo": "Termologia: calor e temperatura",
+        "base": "Termologia",
+        "explicacao": "Diferenciar calor e temperatura e interpretar equilíbrio térmico.",
         "peso": 0.95,
     },
     {
-        "titulo": "Eletricidade",
-        "explicacao": "Circuitos, Lei de Ohm e consumo de energia elétrica.",
+        "titulo": "Termologia: mudanças de estado",
+        "base": "Termologia",
+        "explicacao": "Entender calor latente, fusão, vaporização e curvas de aquecimento.",
+        "peso": 0.95,
+    },
+    {
+        "titulo": "Ondulatória: frequência e período",
+        "base": "Ondulatória",
+        "explicacao": "Relacionar frequência, período, comprimento de onda e velocidade.",
+        "peso": 0.95,
+    },
+    {
+        "titulo": "Ondulatória: som e efeito Doppler",
+        "base": "Ondulatória",
+        "explicacao": "Aplicar conceitos de som, intensidade e efeito Doppler em contexto real.",
+        "peso": 1.0,
+    },
+    {
+        "titulo": "Óptica: espelhos",
+        "base": "Óptica",
+        "explicacao": "Analisar reflexão, imagem em espelhos planos e esféricos.",
+        "peso": 0.95,
+    },
+    {
+        "titulo": "Óptica: lentes e refração",
+        "base": "Óptica",
+        "explicacao": "Estudar refração, lentes convergentes e divergentes e formação de imagens.",
+        "peso": 1.0,
+    },
+    {
+        "titulo": "Eletricidade: lei de Ohm",
+        "base": "Eletricidade",
+        "explicacao": "Relacionar tensão, corrente e resistência em circuitos simples.",
         "peso": 1.2,
     },
     {
-        "titulo": "Magnetismo",
-        "explicacao": "Campos magnéticos e aplicações tecnológicas.",
+        "titulo": "Eletricidade: circuitos e potência",
+        "base": "Eletricidade",
+        "explicacao": "Calcular potência, consumo e associações de resistores.",
+        "peso": 1.15,
+    },
+    {
+        "titulo": "Magnetismo: campo e força",
+        "base": "Magnetismo",
+        "explicacao": "Estudar linhas de campo, força magnética e aplicações tecnológicas.",
+        "peso": 0.9,
+    },
+    {
+        "titulo": "Magnetismo: aplicações tecnológicas",
+        "base": "Magnetismo",
+        "explicacao": "Reconhecer motores, geradores, bússolas e eletroímãs em uso cotidiano.",
         "peso": 0.85,
     },
 ]
+
+TOPIC_ALIASES = {item["titulo"]: item["base"] for item in CURRICULO_DIARIO}
 
 RESOURCES = {
     "Cinemática": [
@@ -192,6 +250,20 @@ TOPIC_CONTENT = {
         "images": [
             {"src": "/static/img/motion.svg", "caption": "Grafico velocidade x tempo"},
         ],
+        "practice": [
+            "Leia o grafico antes de calcular qualquer valor.",
+            "Identifique unidade, sentido e intervalo de tempo.",
+            "Compare distancia percorrida com deslocamento.",
+        ],
+        "common_mistakes": [
+            "Confundir velocidade media com velocidade instantanea.",
+            "Ignorar unidades no resultado final.",
+            "Misturar deslocamento com distancia percorrida.",
+        ],
+        "exam_tips": [
+            "Em grafico s x t, a inclinacao indica velocidade.",
+            "Em grafico v x t, a area representa deslocamento.",
+        ],
     },
     "Dinâmica": {
         "overview": "Relacione forcas e movimento com as Leis de Newton e interprete esquemas de forcas em blocos, planos inclinados e tracao.",
@@ -209,6 +281,20 @@ TOPIC_CONTENT = {
         "demo": "Monte o diagrama de forcas e identifique a forca resultante.",
         "images": [
             {"src": "/static/img/forces.svg", "caption": "Diagrama de forcas"},
+        ],
+        "practice": [
+            "Desenhe o diagrama de corpo livre antes de usar as contas.",
+            "Some apenas as forcas na mesma direcao do movimento.",
+            "Separe peso, normal, atrito e forca aplicada.",
+        ],
+        "common_mistakes": [
+            "Esquecer de decompor a forca no plano inclinado.",
+            "Somar vetores em direcoes diferentes sem projetar.",
+            "Confundir massa com peso.",
+        ],
+        "exam_tips": [
+            "O ENEM cobra leitura visual das forcas antes da formula.",
+            "Se houver equilibrio, a resultante e zero.",
         ],
     },
     "Energia": {
@@ -229,6 +315,20 @@ TOPIC_CONTENT = {
         "images": [
             {"src": "/static/img/energy.svg", "caption": "Conversao de energia"},
         ],
+        "practice": [
+            "Sempre compare energia inicial e final do sistema.",
+            "Verifique se ha perdas por atrito ou dissipacao.",
+            "Use potencia para relacionar energia e tempo.",
+        ],
+        "common_mistakes": [
+            "Esquecer que trabalho e variacao de energia.",
+            "Misturar energia com potencia.",
+            "Ignorar a altura no calculo de energia potencial.",
+        ],
+        "exam_tips": [
+            "Problemas de rampas geralmente misturam energia e forcas.",
+            "Leia se o enunciado quer energia, trabalho ou potencia.",
+        ],
     },
     "Termologia": {
         "overview": "Concentre-se em calor, temperatura e escalas, e aplique calorimetria simples para mudancas de estado.",
@@ -245,6 +345,20 @@ TOPIC_CONTENT = {
         "demo": "Explique como a conveccao aparece em panelas no fogao.",
         "images": [
             {"src": "/static/img/heat.svg", "caption": "Transferencia de calor"},
+        ],
+        "practice": [
+            "Diferencie calor sensivel de calor latente.",
+            "Associe o tipo de transferencia de calor ao contexto.",
+            "Converta unidades quando necessario.",
+        ],
+        "common_mistakes": [
+            "Tratar calor e temperatura como a mesma coisa.",
+            "Esquecer o sinal da troca termica.",
+            "Confundir mudanca de temperatura com mudanca de estado.",
+        ],
+        "exam_tips": [
+            "A curva de aquecimento costuma separar trechos com e sem variacao de temperatura.",
+            "Questões de cotidiano costumam citar geladeira, panela e isolamento termico.",
         ],
     },
     "Ondulatória": {
@@ -263,6 +377,20 @@ TOPIC_CONTENT = {
         "images": [
             {"src": "/static/img/wave.svg", "caption": "Comprimento de onda"},
         ],
+        "practice": [
+            "Use v = lambda * f com unidades coerentes.",
+            "Leia frequencia e periodo como inversos.",
+            "Desenhe a onda para localizar amplitude e comprimento de onda.",
+        ],
+        "common_mistakes": [
+            "Trocar frequencia por periodo.",
+            "Esquecer que a velocidade depende do meio.",
+            "Usar unidade errada para comprimento de onda.",
+        ],
+        "exam_tips": [
+            "Som e luz aparecem em contextos de tecnologia e comunicacao.",
+            "Efeito Doppler exige observar se a fonte se aproxima ou se afasta.",
+        ],
     },
     "Óptica": {
         "overview": "Estude reflexao e refracao, com foco em espelhos, lentes e formacao de imagens.",
@@ -279,6 +407,20 @@ TOPIC_CONTENT = {
         "demo": "Descreva como um raio se comporta ao atravessar uma lente convergente.",
         "images": [
             {"src": "/static/img/optics.svg", "caption": "Reflexao e refracao"},
+        ],
+        "practice": [
+            "Identifique se a lente e convergente ou divergente.",
+            "Desenhe os raios principais para formar a imagem.",
+            "Compare objeto, imagem e foco antes de concluir.",
+        ],
+        "common_mistakes": [
+            "Trocar reflexao por refração.",
+            "Erra o sinal da imagem em espelhos e lentes.",
+            "Esquecer o papel do indice de refracao.",
+        ],
+        "exam_tips": [
+            "Leitura de figuras ajuda muito nas questoes de otica.",
+            "Em lentes, o tipo de imagem depende da posicao do objeto.",
         ],
     },
     "Eletricidade": {
@@ -298,6 +440,20 @@ TOPIC_CONTENT = {
         "images": [
             {"src": "/static/img/circuit.svg", "caption": "Circuito simples"},
         ],
+        "practice": [
+            "Use U = R * I antes de qualquer outra conta.",
+            "Leia se os resistores estao em serie ou paralelo.",
+            "Verifique potencia e consumo quando o enunciado pedir gasto de energia.",
+        ],
+        "common_mistakes": [
+            "Confundir corrente com tensao.",
+            "Somar resistencias em paralelo como se fosse serie.",
+            "Esquecer a unidade de potencia eletrica.",
+        ],
+        "exam_tips": [
+            "O ENEM costuma contextualizar com contas de energia da casa.",
+            "Leia a potencia em kW quando o problema envolver consumo.",
+        ],
     },
     "Magnetismo": {
         "overview": "Relacione campos magneticos com cargas em movimento e aplicacoes tecnologicas.",
@@ -314,6 +470,20 @@ TOPIC_CONTENT = {
         "images": [
             {"src": "/static/img/magnet.svg", "caption": "Linhas de campo magnetico"},
         ],
+        "practice": [
+            "Observe o sentido do campo antes de indicar a forca.",
+            "Associe o tema a motores, geradores e busolas.",
+            "Leia a regra da mao direita quando necessario.",
+        ],
+        "common_mistakes": [
+            "Trocar o sentido do campo magnetico.",
+            "Esquecer que a forca depende do movimento da carga.",
+            "Confundir polo norte e sul em esquemas.",
+        ],
+        "exam_tips": [
+            "Questões costumam cobrar aplicacoes tecnologicas.",
+            "Desenhe o campo para nao se perder no sentido das linhas.",
+        ],
     },
 }
 
@@ -322,6 +492,7 @@ TOPIC_CONTENT = {
 class DayPlan:
     day: date
     topic: str
+    base_topic: str
     explanation: str
     blocks: tuple[str, ...]
     difficulty: str
@@ -353,7 +524,7 @@ def gerar_plano_diario(
     planos: list[DayPlan] = []
 
     for offset in range(dias):
-        topico = BASE_TOPICS[offset % len(BASE_TOPICS)]
+        topico = CURRICULO_DIARIO[offset % len(CURRICULO_DIARIO)]
         peso = float(topico.get("peso", 1.0))
         dificuldade = "intermediario"
         if peso >= 1.15:
@@ -361,11 +532,12 @@ def gerar_plano_diario(
         elif peso <= 0.9:
             dificuldade = "iniciante"
         blocks = tuple(CONTENT_BLOCKS[:blocos])
-        recursos = tuple(RESOURCES.get(topico["titulo"], []))
+        recursos = tuple(RESOURCES.get(topico["base"], []))
         planos.append(
             DayPlan(
                 day=base_date + timedelta(days=offset),
                 topic=topico["titulo"],
+                base_topic=topico["base"],
                 explanation=topico["explicacao"],
                 blocks=blocks,
                 difficulty=dificuldade,
@@ -407,7 +579,8 @@ def esta_concluido(progress: Progress, day: date) -> bool:
 def formatar_plano(plan: DayPlan) -> str:
     linhas = [
         f"Dia {plan.day.strftime('%d/%m/%Y')} - {plan.topic}\n",
-        f"Objetivo do dia: {plan.explanation}\n\n",
+        f"Foco do dia: {plan.explanation}\n",
+        f"Base do conteudo: {plan.base_topic}\n\n",
         "Roteiro de estudo:\n",
     ]
     for index, bloco in enumerate(plan.blocks, start=1):
@@ -420,7 +593,8 @@ def formatar_plano(plan: DayPlan) -> str:
 
 
 def get_topic_content(topic: str) -> dict:
-    return TOPIC_CONTENT.get(topic, TOPIC_CONTENT["Cinemática"])
+    base_topic = TOPIC_ALIASES.get(topic, topic)
+    return TOPIC_CONTENT.get(base_topic, TOPIC_CONTENT["Cinemática"])
 
 
 def formatar_resumo(progresso: Progress, planos: Iterable[DayPlan]) -> str:

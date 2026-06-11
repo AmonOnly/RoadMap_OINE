@@ -65,6 +65,17 @@ def _get_user_id() -> int:
     return DEFAULT_USER_ID
 
 
+def _build_daily_plans(hours: float, days: int, start_day: date | None = None):
+    return gerar_plano_diario(dias=days, horas=hours, inicio=start_day or date.today())
+
+
+def _find_plan_for_date(hours: float, days: int, day: date):
+    for plan in _build_daily_plans(hours, days):
+        if plan.day == day:
+            return plan
+    return None
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -73,6 +84,11 @@ def index():
 @app.route("/content")
 def content_page():
     return render_template("content.html")
+
+
+@app.route("/assunto-do-dia")
+def subject_page():
+    return render_template("assunto-do-dia.html")
 
 
 @app.route("/quiz")
@@ -129,7 +145,7 @@ def daily_plan():
     if cached:
         return jsonify(cached)
 
-    planos = gerar_plano_diario(dias=dias, horas=horas, inicio=date.today())
+    planos = _build_daily_plans(horas, dias)
     progresso = carregar_progresso(PROGRESS_PATH)
     response = []
     for plan in planos:
@@ -188,9 +204,19 @@ def complete_day():
 @app.get("/api/quiz")
 def quiz():
     hours = float(request.args.get("hours", 2))
+    days = int(request.args.get("days", 7))
     topic = request.args.get("topic", "Cinemática")
+    day_str = request.args.get("date")
     language = request.args.get("language", "pt")
     user_id = _get_user_id()
+    if day_str:
+        try:
+            day = date.fromisoformat(day_str)
+            plan = _find_plan_for_date(hours, days, day)
+            if plan:
+                topic = plan.topic
+        except ValueError:
+            pass
     proficiency = get_proficiency(DB_PATH, user_id, topic)
     base = calcular_blocos_por_hora(hours) * 2
     amount = max(4, min(12, int(base * (1.2 - proficiency))))
@@ -250,6 +276,7 @@ def answer():
 def day_content():
     day_str = request.args.get("date")
     hours = float(request.args.get("hours", 2))
+    days = int(request.args.get("days", 7))
 
     if not day_str:
         return jsonify({"error": "date é obrigatório"}), 400
@@ -259,17 +286,19 @@ def day_content():
     except ValueError:
         return jsonify({"error": "date inválido"}), 400
 
-    planos = gerar_plano_diario(dias=7, horas=hours, inicio=date.today())
-    for plan in planos:
-        if plan.day == day:
-            topic_content = get_topic_content(plan.topic)
-            return jsonify(
-                {
-                    "content": formatar_plano(plan),
-                    "topicContent": topic_content,
-                    "resources": list(RESOURCES.get(plan.topic, [])),
-                }
-            )
+    plan = _find_plan_for_date(hours, days, day)
+    if plan:
+        topic_content = get_topic_content(plan.topic)
+        return jsonify(
+            {
+                "content": formatar_plano(plan),
+                "topicContent": topic_content,
+                "resources": list(RESOURCES.get(plan.base_topic, [])),
+                "day": plan.day.isoformat(),
+                "topic": plan.topic,
+                "baseTopic": plan.base_topic,
+            }
+        )
 
     return jsonify({"error": "dia não encontrado"}), 404
 

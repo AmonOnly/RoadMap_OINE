@@ -203,6 +203,7 @@ button {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
+  align-items: start;
 }
 
 .landing-panel {
@@ -399,6 +400,27 @@ button {
   grid-column: span 2;
 }
 
+.subject-grid {
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.8fr);
+}
+
+.subject-panel {
+  gap: 18px;
+}
+
+.subject-lead .content-block {
+  min-height: auto;
+}
+
+.subject-hero .hero-card {
+  align-self: stretch;
+}
+
+.subject-panel .content-columns,
+.content-panel .content-columns {
+  align-items: start;
+}
+
 .quiz-question {
   background: var(--card);
   border-radius: 14px;
@@ -449,8 +471,32 @@ button {
 }
 
 @media (max-width: 900px) {
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+  }
+
+  .hero-content h1 {
+    font-size: 36px;
+  }
+
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
   .quiz-panel {
     grid-column: span 1;
+  }
+
+  .subject-grid {
+    grid-template-columns: 1fr;
   }
 
   .hero-actions {
@@ -458,7 +504,46 @@ button {
     align-items: flex-start;
   }
 
+  .chat-actions {
+    grid-template-columns: 1fr;
+  }
+
   .actions {
     flex-direction: column;
+  }
+
+  .landing-actions {
+    flex-direction: column;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 20px 14px 44px;
+  }
+
+  .hero-content h1 {
+    font-size: 30px;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .days-grid,
+  .content-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .content-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-bubble {
+    max-width: 100%;
   }
 }

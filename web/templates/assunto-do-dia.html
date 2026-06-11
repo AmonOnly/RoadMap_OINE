@@ -3,32 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Conteudo do dia - OINE Physics Daily</title>
+    <title>Assunto do dia - OINE Physics Daily</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
-  <body data-page="content">
+  <body data-page="subject">
     <div class="app">
       <nav class="nav">
         <div class="brand">OINE Physics Daily</div>
         <div class="nav-links">
           <a href="/">Inicio</a>
-          <a href="/assunto-do-dia">Assunto do dia</a>
-          <a class="active" href="/content">Conteudo</a>
+          <a class="active" href="/assunto-do-dia">Assunto do dia</a>
+          <a href="/content">Conteudo</a>
           <a href="/quiz">Quiz</a>
         </div>
       </nav>
 
-      <header class="hero compact">
+      <header class="hero compact subject-hero">
         <div class="hero-content">
-          <p class="pill">Conteudo do dia</p>
-          <h1>Roteiro completo de estudos</h1>
+          <p class="pill">Assunto do dia</p>
+          <h1>Estudo focado no tema certo</h1>
           <p class="subtitle">
-            Aqui voce encontra toda a explicacao do tema, demonstracoes e recursos
-            visuais para fixar o conteudo.
+            Esta pagina centraliza o assunto do dia, a explicacao completa, os
+            pontos de pratica e o acesso direto ao quiz relacionado.
           </p>
           <div class="hero-actions">
-            <a class="ghost" href="/assunto-do-dia">Abrir assunto do dia</a>
-            <button id="start-day" class="primary">Ir para o dia atual</button>
+            <button id="start-day" class="primary">Ver dia atual</button>
+            <button id="open-quiz" class="ghost">Ir para o quiz do assunto</button>
           </div>
         </div>
         <div class="hero-card">
@@ -43,7 +43,7 @@
           </label>
           <label>
             Dias planejados
-            <input id="days" type="number" min="3" max="14" value="7" />
+            <input id="days" type="number" min="3" max="16" value="7" />
           </label>
           <label>
             Objetivo
@@ -59,45 +59,28 @@
           <h2 id="xp-total">0</h2>
         </div>
         <div class="stat-card">
-          <p class="stat-label">Streak</p>
+          <p class="stat-label">Sequencia</p>
           <h2 id="streak">0 dias</h2>
         </div>
         <div class="stat-card">
           <p class="stat-label">Progresso</p>
           <h2 id="summary">0/0 dias</h2>
         </div>
+        <div class="stat-card">
+          <p class="stat-label">Fonte do quiz</p>
+          <h2 id="quiz-source">-</h2>
+        </div>
       </section>
 
-      <main class="grid">
-        <section class="panel chat-panel">
+      <main class="grid subject-grid">
+        <section class="panel subject-panel">
           <div class="panel-header">
-            <h2>Assistente de estudo</h2>
-            <span class="summary">Planejamento guiado</span>
+            <h2 id="day-label">Assunto do dia</h2>
+            <span id="day-difficulty" class="summary">-</span>
           </div>
-          <div id="chat" class="chat"></div>
-          <div class="chat-actions">
-            <input id="chat-input" type="text" placeholder="Digite sua resposta..." />
-            <button id="chat-send">Enviar</button>
+          <div class="subject-lead">
+            <p id="content-overview" class="content-block"></p>
           </div>
-        </section>
-
-        <section class="panel day-panel">
-          <div class="panel-header">
-            <h2>Mapa de dias</h2>
-            <span id="day-label" class="summary">Selecione um dia</span>
-          </div>
-          <div id="days-grid" class="days-grid"></div>
-          <div class="actions">
-            <button id="complete-day">Marcar dia concluido</button>
-          </div>
-        </section>
-
-        <section class="panel content-panel">
-          <div class="panel-header">
-            <h2>Conteudo detalhado</h2>
-            <span id="content-topic-meta" class="summary">-</span>
-          </div>
-          <div id="content-overview" class="content-block"></div>
           <div class="content-columns">
             <div>
               <h3>Conceitos-chave</h3>
@@ -106,16 +89,6 @@
             <div>
               <h3>Formulas e relacoes</h3>
               <ul id="content-formulas" class="content-list"></ul>
-            </div>
-          </div>
-          <div class="content-columns">
-            <div>
-              <h3>Exemplo guiado</h3>
-              <p id="content-example"></p>
-            </div>
-            <div>
-              <h3>Demonstracao</h3>
-              <p id="content-demo"></p>
             </div>
           </div>
           <div class="content-columns">
@@ -130,17 +103,39 @@
           </div>
           <div class="content-columns">
             <div>
+              <h3>Exemplo guiado</h3>
+              <p id="content-example"></p>
+            </div>
+            <div>
+              <h3>Demonstracao</h3>
+              <p id="content-demo"></p>
+            </div>
+          </div>
+          <div class="content-columns">
+            <div>
               <h3>Reforco para a prova</h3>
               <ul id="content-exam-tips" class="content-list"></ul>
             </div>
             <div>
-              <h3>Acao do dia</h3>
-              <p>Revise o conteudo e depois teste no quiz do mesmo assunto.</p>
-              <button id="open-quiz" class="primary">Ir para o quiz deste assunto</button>
+              <h3>Proximo passo</h3>
+              <p>Depois de revisar o tema, avance para o quiz do mesmo assunto.</p>
+              <button id="complete-day" class="primary">Marcar dia concluido</button>
             </div>
           </div>
           <div id="content-gallery" class="content-gallery"></div>
           <div class="resource-list" id="resource-list"></div>
+        </section>
+
+        <section class="panel chat-panel">
+          <div class="panel-header">
+            <h2>Assistente de estudo</h2>
+            <span class="summary">Foco no assunto atual</span>
+          </div>
+          <div id="chat" class="chat"></div>
+          <div class="chat-actions">
+            <input id="chat-input" type="text" placeholder="Digite sua resposta..." />
+            <button id="chat-send">Enviar</button>
+          </div>
         </section>
       </main>
     </div>

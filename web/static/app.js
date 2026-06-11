@@ -1,6 +1,7 @@
 const state = {
   days: [],
   selected: null,
+  selectedDate: null,
   quiz: [],
   topic: "Cinemática",
   stats: { xp: 0, streak: 0 },
@@ -133,9 +134,10 @@ function selectDay(index) {
   const day = state.days[index];
   if (!day) return;
   state.topic = day.topic;
+  state.selectedDate = day.date;
   if (dayLabel) dayLabel.textContent = `Dia ${day.label} • ${day.topic}`;
   if (dayDifficulty) dayDifficulty.textContent = `Nivel: ${day.difficulty}`;
-  if (page === "content") {
+  if (page === "content" || page === "subject") {
     loadDayContent(day.date);
   }
   renderResources(day.resources || []);
@@ -174,11 +176,12 @@ async function markDayComplete() {
 }
 
 async function openQuiz() {
-  const { hours, language } = getParams();
+  const { hours, days, language } = getParams();
+  const day = state.days[state.selected] || state.days[0];
   const response = await fetch(
-    `/api/quiz?hours=${hours}&topic=${encodeURIComponent(
+    `/api/quiz?hours=${hours}&days=${days}&topic=${encodeURIComponent(
       state.topic
-    )}&language=${language}`
+    )}&language=${language}${day ? `&date=${encodeURIComponent(day.date)}` : ""}`
   );
   const data = await response.json();
   if (quizSource) quizSource.textContent = data.source;
@@ -290,6 +293,11 @@ async function loadDayContent(dateStr) {
 
   const content = data.topicContent;
   if (contentOverview) contentOverview.textContent = content.overview;
+  const topicMeta = document.getElementById("content-topic-meta");
+  if (topicMeta) {
+    const baseTopic = data.baseTopic || state.topic;
+    topicMeta.textContent = `${data.topic || state.topic} • ${baseTopic}`;
+  }
 
   if (contentConcepts) {
     contentConcepts.innerHTML = "";
@@ -311,6 +319,36 @@ async function loadDayContent(dateStr) {
 
   if (contentExample) contentExample.textContent = content.example;
   if (contentDemo) contentDemo.textContent = content.demo;
+
+  const contentPractice = document.getElementById("content-practice");
+  if (contentPractice) {
+    contentPractice.innerHTML = "";
+    (content.practice || []).forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      contentPractice.appendChild(li);
+    });
+  }
+
+  const contentMistakes = document.getElementById("content-mistakes");
+  if (contentMistakes) {
+    contentMistakes.innerHTML = "";
+    (content.common_mistakes || []).forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      contentMistakes.appendChild(li);
+    });
+  }
+
+  const contentExamTips = document.getElementById("content-exam-tips");
+  if (contentExamTips) {
+    contentExamTips.innerHTML = "";
+    (content.exam_tips || []).forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      contentExamTips.appendChild(li);
+    });
+  }
 
   if (contentGallery) {
     contentGallery.innerHTML = "";
@@ -365,5 +403,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initChat();
   if (page === "quiz") {
     openQuiz();
+  } else if (page === "subject") {
+    selectDay(0);
   }
 });
