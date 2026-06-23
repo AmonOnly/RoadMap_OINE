@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 import sys
+import os
 from time import time
 import requests
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -43,8 +44,8 @@ DB_PATH = BASE_DIR / "app.sqlite3"
 CACHE_TTL = 120
 _cache: dict[str, tuple[float, dict]] = {}
 
-# AI Chat API Key
-AI_API_KEY = "AQ.Ab8RN6LCjaU6PD_s3viImiYu693WOti2sLKSg4xxnhuFte1FtA"
+# AI Chat API Key (load from environment variable for security)
+AI_API_KEY = os.getenv("CLAUDE_API_KEY", "")
 AI_API_URL = "https://api.anthropic.com/v1/messages"
 
 init_db(DB_PATH)
@@ -321,6 +322,10 @@ def chat():
     
     if not user_message:
         return jsonify({"error": "mensagem vazia"}), 400
+    
+    # Check if API key is configured
+    if not AI_API_KEY:
+        return jsonify({"response": "O assistente de IA não está configurado. Por favor, defina a variável CLAUDE_API_KEY."}), 200
     
     try:
         response = requests.post(
