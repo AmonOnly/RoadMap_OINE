@@ -4,6 +4,7 @@ from datetime import date
 from pathlib import Path
 import sys
 from time import time
+import requests
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -41,6 +42,10 @@ PROGRESS_PATH = BASE_DIR / "progress.json"
 DB_PATH = BASE_DIR / "app.sqlite3"
 CACHE_TTL = 120
 _cache: dict[str, tuple[float, dict]] = {}
+
+# AI Chat API Key
+AI_API_KEY = "AQ.Ab8RN6LCjaU6PD_s3viImiYu693WOti2sLKSg4xxnhuFte1FtA"
+AI_API_URL = "https://api.anthropic.com/v1/messages"
 
 init_db(DB_PATH)
 DEFAULT_USER_ID = get_or_create_default_user(DB_PATH)
@@ -81,14 +86,20 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/conteudos")
 @app.route("/content")
 def content_page():
     return render_template("content.html")
 
 
+@app.route("/conteudo-diario")
+def daily_content_page():
+    return render_template("content.html")
+
+
 @app.route("/assunto-do-dia")
 def subject_page():
-    return render_template("assunto-do-dia.html")
+    return render_template("content.html")
 
 
 @app.route("/quiz")
@@ -220,7 +231,7 @@ def quiz():
     proficiency = get_proficiency(DB_PATH, user_id, topic)
     base = calcular_blocos_por_hora(hours) * 2
     amount = max(4, min(12, int(base * (1.2 - proficiency))))
-    questions, source = fetch_questions(amount=amount, lang=language)
+    questions, source = fetch_questions(amount=amount, lang=language, topic=topic)
     return jsonify(
         {
             "source": source,
@@ -301,6 +312,47 @@ def day_content():
         )
 
     return jsonify({"error": "dia não encontrado"}), 404
+
+
+@app.post("/api/chat")
+def chat():
+    payload = request.get_json(force=True)
+    user_message = payload.get("message", "")
+    
+    if not user_message:
+        return jsonify({"error": "mensagem vazia"}), 400
+    
+    try:
+        response = requests.post(
+            AI_API_URL,
+            headers={
+                "x-api-key": AI_API_KEY,
+                "anthropic-version": "2023-06-01",
+                "content-type": "application/json",
+            },
+            json={
+                "model": "claude-3-5-sonnet-20241022",
+                "max_tokens": 1024,
+                "system": "Você é um assistente de estudos de Física para o ENEM. Responda de forma concisa, educada e sempre em português. Ajude o aluno com dúvidas sobre conceitos de Física, resolução de exercícios e preparação para o ENEM.",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": user_message
+                    }
+                ]
+            },
+            timeout=10
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            ai_response = data.get("content", [{}])[0].get("text", "Desculpe, não consegui gerar uma resposta.")
+            return jsonify({"response": ai_response})
+        else:
+            return jsonify({"response": "Desculpe, erro ao conectar com o assistente de IA. Tente novamente."}), 200
+    
+    except Exception as e:
+        return jsonify({"response": f"Erro ao conectar com a IA: {str(e)}"}), 200
 
 
 if __name__ == "__main__":

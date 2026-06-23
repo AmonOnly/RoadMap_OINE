@@ -254,29 +254,52 @@ async function evaluateAnswer(button, question, selected) {
   });
 }
 
-function handleChat() {
+async function handleChat() {
   if (!chatInput) return;
   const text = normalizeText(chatInput.value);
   if (!text) return;
   addChatBubble(text, "user");
   chatInput.value = "";
 
-  if (state.onboardingStep === 0 && nameInput) {
-    nameInput.value = text;
-  } else if (state.onboardingStep === 1 && hoursInput) {
-    hoursInput.value = text;
-  } else if (state.onboardingStep === 2 && daysInput) {
-    daysInput.value = text;
-  } else if (state.onboardingStep === 3 && goalInput) {
-    goalInput.value = text;
-  }
-
-  state.onboardingStep += 1;
+  // Onboarding phase
   if (state.onboardingStep < onboardingScript.length) {
-    addChatBubble(onboardingScript[state.onboardingStep]);
+    if (state.onboardingStep === 0 && nameInput) {
+      nameInput.value = text;
+    } else if (state.onboardingStep === 1 && hoursInput) {
+      hoursInput.value = text;
+    } else if (state.onboardingStep === 2 && daysInput) {
+      daysInput.value = text;
+    } else if (state.onboardingStep === 3 && goalInput) {
+      goalInput.value = text;
+    }
+
+    state.onboardingStep += 1;
+    if (state.onboardingStep < onboardingScript.length) {
+      addChatBubble(onboardingScript[state.onboardingStep]);
+    } else {
+      addChatBubble("Perfeito! Vou ajustar sua trilha agora.");
+      await saveProfile();
+      await loadDailyPlan();
+      await loadStats();
+    }
   } else {
-    addChatBubble("Perfeito! Vou ajustar sua trilha agora.");
-    saveProfile().then(loadDailyPlan).then(loadStats);
+    // AI chat phase (after onboarding)
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        addChatBubble(data.response || "Desculpe, não consegui gerar uma resposta.");
+      } else {
+        addChatBubble("Erro ao conectar com o assistente. Tente novamente.");
+      }
+    } catch (error) {
+      addChatBubble(`Erro: ${error.message}`);
+    }
   }
 }
 
