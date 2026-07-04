@@ -73,6 +73,11 @@ async function loadProfile() {
   if (daysInput) daysInput.value = data.days || 7;
   if (goalInput) goalInput.value = data.goal || "ENEM";
   if (languageInput) languageInput.value = data.language || "pt";
+  
+  if (!data.is_new) {
+    state.onboardingStep = onboardingScript.length;
+    state.userName = data.name;
+  }
 }
 
 async function saveProfile() {
@@ -305,7 +310,11 @@ async function handleChat() {
 
 function initChat() {
   if (!chatBox) return;
-  addChatBubble(onboardingScript[0]);
+  if (state.onboardingStep >= onboardingScript.length) {
+    addChatBubble(`Bem-vindo de volta, ${state.userName || 'Aluno'}! Como posso ajudar com seus estudos de Física hoje?`);
+  } else {
+    addChatBubble(onboardingScript[0]);
+  }
 }
 
 async function loadDayContent(dateStr) {

@@ -8,3 +8,5 @@ __pycache__/
 .DS_Store
 web/app.sqlite3
 .env
+.env
+.env

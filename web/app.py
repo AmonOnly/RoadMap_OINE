@@ -5,7 +5,16 @@ from pathlib import Path
 import sys
 import os
 from time import time
-import requests
+from dotenv import load_dotenv
+from flask import Flask, request, jsonify
+
+# Novos imports da biblioteca atualizada do Google
+from google import genai
+from google.genai import types
+
+# Load environment variables from .env file
+load_dotenv()
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
@@ -44,10 +53,21 @@ DB_PATH = BASE_DIR / "app.sqlite3"
 CACHE_TTL = 120
 _cache: dict[str, tuple[float, dict]] = {}
 
-# AI Chat API Key (load from environment variable for security)
-AI_API_KEY = os.getenv("CLAUDE_API_KEY", "")
-AI_API_URL = "https://api.anthropic.com/v1/messages"
+# ==========================================
+# CONFIGURAÇÃO DA IA (NOVO GOOGLE GENAI)
+# ==========================================
+api_key = os.getenv("GEMINI_API_KEY")
+INSTRUCAO_SISTEMA = "Você é um assistente de estudos de Física para o ENEM. Responda de forma concisa, educada e sempre em português. Ajude o aluno com dúvidas sobre conceitos de Física, resolução de exercícios e preparação para o ENEM."
 
+if api_key:
+    # Inicializa o cliente da nova biblioteca
+    ai_client = genai.Client(api_key=api_key)
+else:
+    ai_client = None
+
+# ==========================================
+# BANCO DE DADOS E CACHE
+# ==========================================
 init_db(DB_PATH)
 DEFAULT_USER_ID = get_or_create_default_user(DB_PATH)
 
@@ -81,7 +101,9 @@ def _find_plan_for_date(hours: float, days: int, day: date):
             return plan
     return None
 
-
+# ==========================================
+# ROTAS FRONTEND
+# ==========================================
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -107,14 +129,16 @@ def subject_page():
 def quiz_page():
     return render_template("quiz.html")
 
-
+# ==========================================
+# ROTAS DA API DE ESTUDOS
+# ==========================================
 @app.get("/api/profile")
 def profile():
     user_id = _get_user_id()
     settings = load_settings(DB_PATH, user_id)
     if not settings:
         return jsonify(
-            {"name": "Aluno", "hours": 2, "days": 7, "goal": "ENEM", "language": "pt"}
+            {"name": "Aluno", "hours": 2, "days": 7, "goal": "ENEM", "language": "pt", "is_new": True}
         )
     return jsonify(
         {
@@ -123,6 +147,7 @@ def profile():
             "days": settings.days_planned,
             "goal": settings.goal,
             "language": settings.language,
+            "is_new": False
         }
     )
 
@@ -314,7 +339,9 @@ def day_content():
 
     return jsonify({"error": "dia não encontrado"}), 404
 
-
+# ==========================================
+# ROTA DA IA / CHAT BOT (ATUALIZADA)
+# ==========================================
 @app.post("/api/chat")
 def chat():
     payload = request.get_json(force=True)
@@ -323,38 +350,22 @@ def chat():
     if not user_message:
         return jsonify({"error": "mensagem vazia"}), 400
     
-    # Check if API key is configured
-    if not AI_API_KEY:
-        return jsonify({"response": "O assistente de IA não está configurado. Por favor, defina a variável CLAUDE_API_KEY."}), 200
+    # Verifica se a chave da IA está configurada corretamente
+    if not api_key or not ai_client:
+        return jsonify({"response": "O assistente de IA não está configurado. Por favor, defina a variável GEMINI_API_KEY no arquivo .env."}), 200
     
     try:
-        response = requests.post(
-            AI_API_URL,
-            headers={
-                "x-api-key": AI_API_KEY,
-                "anthropic-version": "2023-06-01",
-                "content-type": "application/json",
-            },
-            json={
-                "model": "claude-3-5-sonnet-20241022",
-                "max_tokens": 1024,
-                "system": "Você é um assistente de estudos de Física para o ENEM. Responda de forma concisa, educada e sempre em português. Ajude o aluno com dúvidas sobre conceitos de Física, resolução de exercícios e preparação para o ENEM.",
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": user_message
-                    }
-                ]
-            },
-            timeout=10
+        # Nova chamada da API do Gemini com a nova biblioteca
+        response = ai_client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=user_message,
+            config=types.GenerateContentConfig(
+                system_instruction=INSTRUCAO_SISTEMA,
+            )
         )
         
-        if response.status_code == 200:
-            data = response.json()
-            ai_response = data.get("content", [{}])[0].get("text", "Desculpe, não consegui gerar uma resposta.")
-            return jsonify({"response": ai_response})
-        else:
-            return jsonify({"response": "Desculpe, erro ao conectar com o assistente de IA. Tente novamente."}), 200
+        # Retorna o texto formatado para o usuário
+        return jsonify({"response": response.text})
     
     except Exception as e:
         return jsonify({"response": f"Erro ao conectar com a IA: {str(e)}"}), 200
