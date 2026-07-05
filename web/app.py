@@ -13,7 +13,11 @@ from google import genai
 from google.genai import types
 
 # Load environment variables from .env file
-load_dotenv()
+# override=True garante que o valor do .env sempre prevaleça sobre uma
+# variável de ambiente com o mesmo nome já definida no sistema/terminal/IDE
+# (sem isso, uma GEMINI_API_KEY antiga ou vazia no ambiente teria prioridade
+# silenciosamente, causando erros de autenticação difíceis de diagnosticar).
+load_dotenv(override=True)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -60,9 +64,29 @@ api_key = os.getenv("GEMINI_API_KEY")
 INSTRUCAO_SISTEMA = "Você é um assistente de estudos de Física para o ENEM. Responda de forma concisa, educada e sempre em português. Ajude o aluno com dúvidas sobre conceitos de Física, resolução de exercícios e preparação para o ENEM."
 
 if api_key:
+    # Diagnóstico não sensível: confirma que a chave foi carregada e detecta
+    # formatos claramente errados sem nunca imprimir a chave completa.
+    mascara = f"{api_key[:4]}...{api_key[-4:]}" if len(api_key) > 8 else "***"
+    print(f"[IA] GEMINI_API_KEY carregada ({mascara}, {len(api_key)} caracteres).")
+    if not api_key.startswith("AIza"):
+        print(
+            "[IA] AVISO: essa chave não começa com 'AIza', formato típico de uma "
+            "chave do Gemini Developer API (https://aistudio.google.com/app/apikey). "
+            "Verifique se não é uma credencial de outro tipo (OAuth client, service "
+            "account, chave de Vertex AI etc.)."
+        )
+    if os.getenv("GOOGLE_APPLICATION_CREDENTIALS"):
+        print(
+            "[IA] AVISO: a variável GOOGLE_APPLICATION_CREDENTIALS está definida no "
+            "ambiente. Isso pode fazer bibliotecas do Google tentarem autenticação "
+            "OAuth/ADC em vez da API key, causando erros como "
+            "'ACCESS_TOKEN_TYPE_UNSUPPORTED'. Se não estiver usando Vertex AI, "
+            "remova essa variável do ambiente."
+        )
     # Inicializa o cliente da nova biblioteca
     ai_client = genai.Client(api_key=api_key)
 else:
+    print("[IA] GEMINI_API_KEY não encontrada no ambiente nem no .env.")
     ai_client = None
 
 # ==========================================
@@ -117,12 +141,12 @@ def content_page():
 
 @app.route("/conteudo-diario")
 def daily_content_page():
-    return render_template("content.html")
+    return render_template("assunto-do-dia.html")
 
 
 @app.route("/assunto-do-dia")
 def subject_page():
-    return render_template("content.html")
+    return render_template("assunto-do-dia.html")
 
 
 @app.route("/quiz")
@@ -257,7 +281,9 @@ def quiz():
     proficiency = get_proficiency(DB_PATH, user_id, topic)
     base = calcular_blocos_por_hora(hours) * 2
     amount = max(4, min(12, int(base * (1.2 - proficiency))))
-    questions, source = fetch_questions(amount=amount, lang=language, topic=topic)
+    questions, source = fetch_questions(
+        amount=amount, lang=language, topic=topic, ai_client=ai_client
+    )
     return jsonify(
         {
             "source": source,

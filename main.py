@@ -54,7 +54,7 @@ class OINERoadmapApp:
             row=1, column=0, sticky="w"
         )
         self.nivel_combo = ttk.Combobox(
-            frame, values=["iniciante", "intermediario", "avancado"], state="readonly"
+            frame, values=["iniciante", "intermediário", "avançado"], state="readonly"
         )
         self.nivel_combo.current(0)
         self.nivel_combo.grid(row=1, column=1, pady=5)

@@ -31,13 +31,13 @@ RECOMENDACOES = {
         "Assista videoaulas introdutórias.",
         "Foque em compreender os conceitos fundamentais.",
     ],
-    "intermediario": [
+    "intermediário": [
         "Faça exercícios contextualizados.",
         "Treine interpretação física dos problemas.",
         "Utilize revisões ativas semanalmente.",
         "Resolva listas com tempo controlado.",
     ],
-    "avancado": [
+    "avançado": [
         "Resolva problemas olímpicos complexos.",
         "Treine estratégias próprias de resolução.",
         "Faça simulados completos da OINE.",

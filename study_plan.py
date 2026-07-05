@@ -233,11 +233,11 @@ CONTENT_BLOCKS = [
 
 TOPIC_CONTENT = {
     "Cinemática": {
-        "overview": "Estude movimentos com foco em velocidade e aceleracao, usando graficos e leitura de enunciados tipicos do ENEM.",
+        "overview": "Estude movimentos com foco em velocidade e aceleração, usando gráficos e leitura de enunciados típicos do ENEM.",
         "concepts": [
-            "Posicao, deslocamento e trajetoria.",
-            "Velocidade media e velocidade instantanea.",
-            "Aceleracao e interpretacao de graficos s x t e v x t.",
+            "Posição, deslocamento e trajetória.",
+            "Velocidade média e velocidade instantânea.",
+            "Aceleração e interpretação de gráficos s x t e v x t.",
         ],
         "formulas": [
             "v = Δs / Δt",
@@ -245,64 +245,64 @@ TOPIC_CONTENT = {
             "s = s0 + v * t (MRU)",
             "v = v0 + a * t (MRUV)",
         ],
-        "example": "Um carro parte do repouso e acelera a 2 m/s^2 por 5 s. Calcule a velocidade final e a distancia percorrida.",
-        "demo": "Desenhe um grafico v x t e destaque a area que representa o deslocamento.",
+        "example": "Um carro parte do repouso e acelera a 2 m/s^2 por 5 s. Calcule a velocidade final e a distância percorrida.",
+        "demo": "Desenhe um gráfico v x t e destaque a área que representa o deslocamento.",
         "images": [
-            {"src": "/static/img/motion.svg", "caption": "Grafico velocidade x tempo"},
+            {"src": "/static/img/motion.svg", "caption": "Gráfico velocidade x tempo"},
         ],
         "practice": [
-            "Leia o grafico antes de calcular qualquer valor.",
+            "Leia o gráfico antes de calcular qualquer valor.",
             "Identifique unidade, sentido e intervalo de tempo.",
-            "Compare distancia percorrida com deslocamento.",
+            "Compare distância percorrida com deslocamento.",
         ],
         "common_mistakes": [
-            "Confundir velocidade media com velocidade instantanea.",
+            "Confundir velocidade média com velocidade instantânea.",
             "Ignorar unidades no resultado final.",
-            "Misturar deslocamento com distancia percorrida.",
+            "Misturar deslocamento com distância percorrida.",
         ],
         "exam_tips": [
-            "Em grafico s x t, a inclinacao indica velocidade.",
-            "Em grafico v x t, a area representa deslocamento.",
+            "Em gráfico s x t, a inclinação indica velocidade.",
+            "Em gráfico v x t, a área representa deslocamento.",
         ],
     },
     "Dinâmica": {
-        "overview": "Relacione forcas e movimento com as Leis de Newton e interprete esquemas de forcas em blocos, planos inclinados e tracao.",
+        "overview": "Relacione forças e movimento com as Leis de Newton e interprete esquemas de forças em blocos, planos inclinados e tração.",
         "concepts": [
             "Primeira, segunda e terceira leis de Newton.",
-            "Forca resultante e diagrama de corpo livre.",
-            "Atrito estatico e cinetico em situacoes reais.",
+            "Força resultante e diagrama de corpo livre.",
+            "Atrito estático e cinético em situações reais.",
         ],
         "formulas": [
             "F = m * a",
             "P = m * g",
             "F_at = μ * N",
         ],
-        "example": "Um bloco de 4 kg sofre uma forca horizontal de 12 N. Calcule a aceleracao assumindo atrito desprezivel.",
-        "demo": "Monte o diagrama de forcas e identifique a forca resultante.",
+        "example": "Um bloco de 4 kg sofre uma força horizontal de 12 N. Calcule a aceleração assumindo atrito desprezível.",
+        "demo": "Monte o diagrama de forças e identifique a força resultante.",
         "images": [
-            {"src": "/static/img/forces.svg", "caption": "Diagrama de forcas"},
+            {"src": "/static/img/forces.svg", "caption": "Diagrama de forças"},
         ],
         "practice": [
             "Desenhe o diagrama de corpo livre antes de usar as contas.",
-            "Some apenas as forcas na mesma direcao do movimento.",
-            "Separe peso, normal, atrito e forca aplicada.",
+            "Some apenas as forças na mesma direção do movimento.",
+            "Separe peso, normal, atrito e força aplicada.",
         ],
         "common_mistakes": [
-            "Esquecer de decompor a forca no plano inclinado.",
-            "Somar vetores em direcoes diferentes sem projetar.",
+            "Esquecer de decompor a força no plano inclinado.",
+            "Somar vetores em direções diferentes sem projetar.",
             "Confundir massa com peso.",
         ],
         "exam_tips": [
-            "O ENEM cobra leitura visual das forcas antes da formula.",
-            "Se houver equilibrio, a resultante e zero.",
+            "O ENEM cobra leitura visual das forças antes da fórmula.",
+            "Se houver equilíbrio, a resultante é zero.",
         ],
     },
     "Energia": {
-        "overview": "Use conservacao de energia e trabalho para resolver problemas com potencia e variacao de altura.",
+        "overview": "Use conservação de energia e trabalho para resolver problemas com potência e variação de altura.",
         "concepts": [
-            "Trabalho de uma forca constante.",
-            "Energia cinetica e potencial gravitacional.",
-            "Potencia media e rendimento.",
+            "Trabalho de uma força constante.",
+            "Energia cinética e potencial gravitacional.",
+            "Potência média e rendimento.",
         ],
         "formulas": [
             "W = F * d * cos(θ)",
@@ -310,63 +310,63 @@ TOPIC_CONTENT = {
             "E_p = m * g * h",
             "P = W / Δt",
         ],
-        "example": "Uma pessoa eleva um objeto de 2 kg a 3 m em 4 s. Calcule o trabalho e a potencia media.",
-        "demo": "Compare energia potencial antes e depois e descreva a conversao em energia cinetica.",
+        "example": "Uma pessoa eleva um objeto de 2 kg a 3 m em 4 s. Calcule o trabalho e a potência média.",
+        "demo": "Compare energia potencial antes e depois e descreva a conversão em energia cinética.",
         "images": [
-            {"src": "/static/img/energy.svg", "caption": "Conversao de energia"},
+            {"src": "/static/img/energy.svg", "caption": "Conversão de energia"},
         ],
         "practice": [
             "Sempre compare energia inicial e final do sistema.",
-            "Verifique se ha perdas por atrito ou dissipacao.",
-            "Use potencia para relacionar energia e tempo.",
+            "Verifique se há perdas por atrito ou dissipação.",
+            "Use potência para relacionar energia e tempo.",
         ],
         "common_mistakes": [
-            "Esquecer que trabalho e variacao de energia.",
-            "Misturar energia com potencia.",
-            "Ignorar a altura no calculo de energia potencial.",
+            "Esquecer que trabalho é variação de energia.",
+            "Misturar energia com potência.",
+            "Ignorar a altura no cálculo de energia potencial.",
         ],
         "exam_tips": [
-            "Problemas de rampas geralmente misturam energia e forcas.",
-            "Leia se o enunciado quer energia, trabalho ou potencia.",
+            "Problemas de rampas geralmente misturam energia e forças.",
+            "Leia se o enunciado quer energia, trabalho ou potência.",
         ],
     },
     "Termologia": {
-        "overview": "Concentre-se em calor, temperatura e escalas, e aplique calorimetria simples para mudancas de estado.",
+        "overview": "Concentre-se em calor, temperatura e escalas, e aplique calorimetria simples para mudanças de estado.",
         "concepts": [
-            "Calor sensivel e calor latente.",
-            "Escalas termometricas e equilibrio termico.",
-            "Transferencia de calor: conducao, conveccao e radiacao.",
+            "Calor sensível e calor latente.",
+            "Escalas termométricas e equilíbrio térmico.",
+            "Transferência de calor: condução, convecção e radiação.",
         ],
         "formulas": [
             "Q = m * c * ΔT",
             "Q = m * L",
         ],
-        "example": "Qual o calor necessario para aquecer 0,5 kg de agua de 20°C para 80°C? Use c = 4,2 kJ/kg°C.",
-        "demo": "Explique como a conveccao aparece em panelas no fogao.",
+        "example": "Qual o calor necessário para aquecer 0,5 kg de água de 20°C para 80°C? Use c = 4,2 kJ/kg°C.",
+        "demo": "Explique como a convecção aparece em panelas no fogão.",
         "images": [
-            {"src": "/static/img/heat.svg", "caption": "Transferencia de calor"},
+            {"src": "/static/img/heat.svg", "caption": "Transferência de calor"},
         ],
         "practice": [
-            "Diferencie calor sensivel de calor latente.",
-            "Associe o tipo de transferencia de calor ao contexto.",
-            "Converta unidades quando necessario.",
+            "Diferencie calor sensível de calor latente.",
+            "Associe o tipo de transferência de calor ao contexto.",
+            "Converta unidades quando necessário.",
         ],
         "common_mistakes": [
             "Tratar calor e temperatura como a mesma coisa.",
-            "Esquecer o sinal da troca termica.",
-            "Confundir mudanca de temperatura com mudanca de estado.",
+            "Esquecer o sinal da troca térmica.",
+            "Confundir mudança de temperatura com mudança de estado.",
         ],
         "exam_tips": [
-            "A curva de aquecimento costuma separar trechos com e sem variacao de temperatura.",
-            "Questões de cotidiano costumam citar geladeira, panela e isolamento termico.",
+            "A curva de aquecimento costuma separar trechos com e sem variação de temperatura.",
+            "Questões de cotidiano costumam citar geladeira, panela e isolamento térmico.",
         ],
     },
     "Ondulatória": {
-        "overview": "Analise ondas mecanicas e sonoras, interpretando frequencia, comprimento de onda e velocidade.",
+        "overview": "Analise ondas mecânicas e sonoras, interpretando frequência, comprimento de onda e velocidade.",
         "concepts": [
             "Elementos de uma onda: crista, vale, amplitude.",
-            "Frequencia, periodo e comprimento de onda.",
-            "Efeito Doppler e aplicacoes no cotidiano.",
+            "Frequência, período e comprimento de onda.",
+            "Efeito Doppler e aplicações no cotidiano.",
         ],
         "formulas": [
             "v = λ * f",
@@ -379,110 +379,110 @@ TOPIC_CONTENT = {
         ],
         "practice": [
             "Use v = lambda * f com unidades coerentes.",
-            "Leia frequencia e periodo como inversos.",
+            "Leia frequência e período como inversos.",
             "Desenhe a onda para localizar amplitude e comprimento de onda.",
         ],
         "common_mistakes": [
-            "Trocar frequencia por periodo.",
+            "Trocar frequência por período.",
             "Esquecer que a velocidade depende do meio.",
             "Usar unidade errada para comprimento de onda.",
         ],
         "exam_tips": [
-            "Som e luz aparecem em contextos de tecnologia e comunicacao.",
+            "Som e luz aparecem em contextos de tecnologia e comunicação.",
             "Efeito Doppler exige observar se a fonte se aproxima ou se afasta.",
         ],
     },
     "Óptica": {
-        "overview": "Estude reflexao e refracao, com foco em espelhos, lentes e formacao de imagens.",
+        "overview": "Estude reflexão e refração, com foco em espelhos, lentes e formação de imagens.",
         "concepts": [
-            "Leis da reflexao e refracao.",
-            "Formacao de imagens em espelhos planos e esfericos.",
+            "Leis da reflexão e refração.",
+            "Formação de imagens em espelhos planos e esféricos.",
             "Lentes convergentes e divergentes.",
         ],
         "formulas": [
             "1/f = 1/p + 1/p'",
             "n1 * sin(θ1) = n2 * sin(θ2)",
         ],
-        "example": "Uma lente convergente de 20 cm forma imagem a 40 cm. Encontre a distancia do objeto.",
+        "example": "Uma lente convergente de 20 cm forma imagem a 40 cm. Encontre a distância do objeto.",
         "demo": "Descreva como um raio se comporta ao atravessar uma lente convergente.",
         "images": [
-            {"src": "/static/img/optics.svg", "caption": "Reflexao e refracao"},
+            {"src": "/static/img/optics.svg", "caption": "Reflexão e refração"},
         ],
         "practice": [
-            "Identifique se a lente e convergente ou divergente.",
+            "Identifique se a lente é convergente ou divergente.",
             "Desenhe os raios principais para formar a imagem.",
             "Compare objeto, imagem e foco antes de concluir.",
         ],
         "common_mistakes": [
-            "Trocar reflexao por refração.",
+            "Trocar reflexão por refração.",
             "Erra o sinal da imagem em espelhos e lentes.",
-            "Esquecer o papel do indice de refracao.",
+            "Esquecer o papel do índice de refração.",
         ],
         "exam_tips": [
-            "Leitura de figuras ajuda muito nas questoes de otica.",
-            "Em lentes, o tipo de imagem depende da posicao do objeto.",
+            "Leitura de figuras ajuda muito nas questões de óptica.",
+            "Em lentes, o tipo de imagem depende da posição do objeto.",
         ],
     },
     "Eletricidade": {
-        "overview": "Resolva circuitos simples com Lei de Ohm e analise potencia e consumo de energia.",
+        "overview": "Resolva circuitos simples com Lei de Ohm e analise potência e consumo de energia.",
         "concepts": [
-            "Corrente eletrica, tensao e resistencia.",
-            "Associacao de resistores em serie e paralelo.",
-            "Potencia eletrica e consumo em kWh.",
+            "Corrente elétrica, tensão e resistência.",
+            "Associação de resistores em série e paralelo.",
+            "Potência elétrica e consumo em kWh.",
         ],
         "formulas": [
             "U = R * I",
             "P = U * I",
             "E = P * Δt",
         ],
-        "example": "Um resistor de 10 Ω recebe 2 A. Calcule a tensao e a potencia dissipada.",
+        "example": "Um resistor de 10 Ω recebe 2 A. Calcule a tensão e a potência dissipada.",
         "demo": "Desenhe um circuito com fonte e resistor e identifique a corrente.",
         "images": [
             {"src": "/static/img/circuit.svg", "caption": "Circuito simples"},
         ],
         "practice": [
             "Use U = R * I antes de qualquer outra conta.",
-            "Leia se os resistores estao em serie ou paralelo.",
-            "Verifique potencia e consumo quando o enunciado pedir gasto de energia.",
+            "Leia se os resistores estão em série ou paralelo.",
+            "Verifique potência e consumo quando o enunciado pedir gasto de energia.",
         ],
         "common_mistakes": [
-            "Confundir corrente com tensao.",
-            "Somar resistencias em paralelo como se fosse serie.",
-            "Esquecer a unidade de potencia eletrica.",
+            "Confundir corrente com tensão.",
+            "Somar resistências em paralelo como se fosse série.",
+            "Esquecer a unidade de potência elétrica.",
         ],
         "exam_tips": [
             "O ENEM costuma contextualizar com contas de energia da casa.",
-            "Leia a potencia em kW quando o problema envolver consumo.",
+            "Leia a potência em kW quando o problema envolver consumo.",
         ],
     },
     "Magnetismo": {
-        "overview": "Relacione campos magneticos com cargas em movimento e aplicacoes tecnologicas.",
+        "overview": "Relacione campos magnéticos com cargas em movimento e aplicações tecnológicas.",
         "concepts": [
-            "Campo magnetico e linhas de campo.",
-            "Forca magnetica sobre cargas em movimento.",
-            "Aplicacoes: motores, alto-falantes e bussolas.",
+            "Campo magnético e linhas de campo.",
+            "Força magnética sobre cargas em movimento.",
+            "Aplicações: motores, alto-falantes e bússolas.",
         ],
         "formulas": [
             "F = q * v * B * sin(θ)",
         ],
-        "example": "Uma carga entra em um campo magnetico perpendicular. Descreva o tipo de movimento.",
+        "example": "Uma carga entra em um campo magnético perpendicular. Descreva o tipo de movimento.",
         "demo": "Indique o sentido das linhas de campo ao redor de um imã.",
         "images": [
-            {"src": "/static/img/magnet.svg", "caption": "Linhas de campo magnetico"},
+            {"src": "/static/img/magnet.svg", "caption": "Linhas de campo magnético"},
         ],
         "practice": [
-            "Observe o sentido do campo antes de indicar a forca.",
-            "Associe o tema a motores, geradores e busolas.",
-            "Leia a regra da mao direita quando necessario.",
+            "Observe o sentido do campo antes de indicar a força.",
+            "Associe o tema a motores, geradores e bússolas.",
+            "Leia a regra da mão direita quando necessário.",
         ],
         "common_mistakes": [
-            "Trocar o sentido do campo magnetico.",
-            "Esquecer que a forca depende do movimento da carga.",
+            "Trocar o sentido do campo magnético.",
+            "Esquecer que a força depende do movimento da carga.",
             "Confundir polo norte e sul em esquemas.",
         ],
         "exam_tips": [
-            "Questões costumam cobrar aplicacoes tecnologicas.",
-            "Desenhe o campo para nao se perder no sentido das linhas.",
+            "Questões costumam cobrar aplicações tecnológicas.",
+            "Desenhe o campo para não se perder no sentido das linhas.",
         ],
     },
 }
@@ -526,9 +526,9 @@ def gerar_plano_diario(
     for offset in range(dias):
         topico = CURRICULO_DIARIO[offset % len(CURRICULO_DIARIO)]
         peso = float(topico.get("peso", 1.0))
-        dificuldade = "intermediario"
+        dificuldade = "intermediário"
         if peso >= 1.15:
-            dificuldade = "avancado"
+            dificuldade = "avançado"
         elif peso <= 0.9:
             dificuldade = "iniciante"
         blocks = tuple(CONTENT_BLOCKS[:blocos])
